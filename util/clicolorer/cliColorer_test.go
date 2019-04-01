@@ -2,6 +2,8 @@ package clicolorer
 
 import (
 	"fmt"
+
+	"github.com/gookit/color"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -20,7 +22,7 @@ var _ = Context("cliColorer", func() {
 				objectUnderTest := New()
 				providedFormatString := "%v"
 				providedValue1 := "dummyString"
-				expectedString := fmt.Sprintf(providedFormatString, providedValue1)
+				expectedString := color.FgDefault.Sprintf(providedFormatString, providedValue1)
 
 				/* act */
 				objectUnderTest.Disable()
@@ -35,7 +37,7 @@ var _ = Context("cliColorer", func() {
 				objectUnderTest := New()
 				providedFormatString := "%v"
 				providedValue1 := "dummyString"
-				expectedString := fmt.Sprintf(providedFormatString, providedValue1)
+				expectedString := color.FgDefault.Sprintf(providedFormatString, providedValue1)
 
 				/* act */
 				objectUnderTest.Disable()
@@ -50,7 +52,7 @@ var _ = Context("cliColorer", func() {
 				objectUnderTest := New()
 				providedFormatString := "%v"
 				providedValue1 := "dummyString"
-				expectedString := fmt.Sprintf(providedFormatString, providedValue1)
+				expectedString := color.FgDefault.Sprintf(providedFormatString, providedValue1)
 
 				/* act */
 				objectUnderTest.Disable()
@@ -65,7 +67,7 @@ var _ = Context("cliColorer", func() {
 				objectUnderTest := New()
 				providedFormatString := "%v"
 				providedValue1 := "dummyString"
-				expectedString := fmt.Sprintf(providedFormatString, providedValue1)
+				expectedString := color.FgDefault.Sprintf(providedFormatString, providedValue1)
 
 				/* act */
 				objectUnderTest.Disable()
@@ -81,7 +83,7 @@ var _ = Context("cliColorer", func() {
 			objectUnderTest := New()
 			providedFormatString := "%v"
 			providedValue1 := "dummyString"
-			expectedString := fmt.Sprintf("\x1b[93;1m%s\x1b[0m", fmt.Sprintf(providedFormatString, providedValue1))
+			expectedString := fmt.Sprintf("\x1b[33;1m%s\x1b[0m", fmt.Sprintf(providedFormatString, providedValue1))
 
 			/* act */
 			actualString := objectUnderTest.Attention(providedFormatString, providedValue1)
@@ -96,7 +98,7 @@ var _ = Context("cliColorer", func() {
 			objectUnderTest := New()
 			providedFormatString := "%v"
 			providedValue1 := "dummyString"
-			expectedString := fmt.Sprintf("\x1b[91;1m%s\x1b[0m", fmt.Sprintf(providedFormatString, providedValue1))
+			expectedString := fmt.Sprintf("\x1b[31;1m%s\x1b[0m", fmt.Sprintf(providedFormatString, providedValue1))
 
 			/* act */
 			actualString := objectUnderTest.Error(providedFormatString, providedValue1)
@@ -111,7 +113,7 @@ var _ = Context("cliColorer", func() {
 			objectUnderTest := New()
 			providedFormatString := "%v"
 			providedValue1 := "dummyString"
-			expectedString := fmt.Sprintf("\x1b[96;1m%s\x1b[0m", fmt.Sprintf(providedFormatString, providedValue1))
+			expectedString := fmt.Sprintf("\x1b[36;1m%s\x1b[0m", fmt.Sprintf(providedFormatString, providedValue1))
 
 			/* act */
 			actualString := objectUnderTest.Info(providedFormatString, providedValue1)
@@ -126,7 +128,7 @@ var _ = Context("cliColorer", func() {
 			objectUnderTest := New()
 			providedFormatString := "%v"
 			providedValue1 := "dummyString"
-			expectedString := fmt.Sprintf("\x1b[92;1m%s\x1b[0m", fmt.Sprintf(providedFormatString, providedValue1))
+			expectedString := fmt.Sprintf("\x1b[32;1m%s\x1b[0m", fmt.Sprintf(providedFormatString, providedValue1))
 
 			/* act */
 			actualString := objectUnderTest.Success(providedFormatString, providedValue1)

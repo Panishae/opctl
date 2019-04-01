@@ -3,7 +3,7 @@ package clicolorer
 //go:generate counterfeiter -o ./fake.go --fake-name Fake ./ CliColorer
 
 import (
-	"github.com/fatih/color"
+	"github.com/gookit/color"
 )
 
 type CliColorer interface {
@@ -36,64 +36,58 @@ type CliColorer interface {
 }
 
 func New() CliColorer {
-	attentionCliColorer := color.New(color.FgHiYellow, color.Bold)
-	attentionCliColorer.EnableColor()
-
-	errorCliColorer := color.New(color.FgHiRed, color.Bold)
-	errorCliColorer.EnableColor()
-
-	infoCliColorer := color.New(color.FgHiCyan, color.Bold)
-	infoCliColorer.EnableColor()
-
-	successCliColorer := color.New(color.FgHiGreen, color.Bold)
-	successCliColorer.EnableColor()
+	attentionCliColorer := color.Style{color.FgYellow, color.OpBold}
+	errorCliColorer := color.Style{color.FgRed, color.OpBold}
+	infoCliColorer := color.Style{color.FgCyan, color.OpBold}
+	successCliColorer := color.Style{color.FgGreen, color.OpBold}
 
 	return &cliColorer{
-		attentionCliColorer: attentionCliColorer,
-		errorCliColorer:     errorCliColorer,
-		infoCliColorer:      infoCliColorer,
-		successCliColorer:   successCliColorer,
+		attentionCliColorer: &attentionCliColorer,
+		errorCliColorer:     &errorCliColorer,
+		infoCliColorer:      &infoCliColorer,
+		successCliColorer:   &successCliColorer,
 	}
 }
 
 type cliColorer struct {
-	attentionCliColorer *color.Color
-	errorCliColorer     *color.Color
-	infoCliColorer      *color.Color
-	successCliColorer   *color.Color
+	attentionCliColorer *color.Style
+	errorCliColorer     *color.Style
+	infoCliColorer      *color.Style
+	successCliColorer   *color.Style
 }
 
 func (this *cliColorer) Disable() {
-	this.attentionCliColorer.DisableColor()
-	this.errorCliColorer.DisableColor()
-	this.infoCliColorer.DisableColor()
-	this.successCliColorer.DisableColor()
+	colorDefault := color.Style{color.FgDefault}
+	this.attentionCliColorer = &colorDefault
+	this.errorCliColorer = &colorDefault
+	this.infoCliColorer = &colorDefault
+	this.successCliColorer = &colorDefault
 }
 
 func (this cliColorer) Attention(
 	format string,
 	values ...interface{},
 ) string {
-	return this.attentionCliColorer.SprintfFunc()(format, values...)
+	return this.attentionCliColorer.Sprintf(format, values...)
 }
 
 func (this cliColorer) Error(
 	format string,
 	values ...interface{},
 ) string {
-	return this.errorCliColorer.SprintfFunc()(format, values...)
+	return this.errorCliColorer.Sprintf(format, values...)
 }
 
 func (this cliColorer) Info(
 	format string,
 	values ...interface{},
 ) string {
-	return this.infoCliColorer.SprintfFunc()(format, values...)
+	return this.infoCliColorer.Sprintf(format, values...)
 }
 
 func (this cliColorer) Success(
 	format string,
 	values ...interface{},
 ) string {
-	return this.successCliColorer.SprintfFunc()(format, values...)
+	return this.successCliColorer.Sprintf(format, values...)
 }
