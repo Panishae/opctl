@@ -1,15 +1,14 @@
 package image
 
-//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 -o ./fakeInterpreter.go --fake-name FakeInterpreter ./ Interpreter
-
 import (
 	"fmt"
 
 	"github.com/opctl/opctl/sdks/go/model"
 	"github.com/opctl/opctl/sdks/go/opspec/interpreter/dir"
-	stringPkg "github.com/opctl/opctl/sdks/go/opspec/interpreter/string"
+	stringPkg "github.com/opctl/opctl/sdks/go/opspec/interpreter/str"
 )
 
+//counterfeiter:generate -o fakes/interpreter.go . Interpreter
 type Interpreter interface {
 	Interpret(
 		scope map[string]*model.Value,
@@ -56,13 +55,14 @@ func (itp _interpreter) Interpret(
 		}, nil
 	}
 
-	ref, err := itp.stringInterpreter.Interpret(scope, scgContainerCallImage.Ref, opHandle)
-	if nil != err {
-		return nil, err
-	}
+	dcgContainerCallImage := &model.DCGContainerCallImage{}
+	if nil != scgContainerCallImage.Ref {
+		ref, err := itp.stringInterpreter.Interpret(scope, scgContainerCallImage.Ref, opHandle)
+		if nil != err {
+			return nil, err
+		}
 
-	dcgContainerCallImage := &model.DCGContainerCallImage{
-		Ref: *ref.String,
+		dcgContainerCallImage.Ref = ref.String
 	}
 
 	if nil != scgContainerCallImage.PullCreds {

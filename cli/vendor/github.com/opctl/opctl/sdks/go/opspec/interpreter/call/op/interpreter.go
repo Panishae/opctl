@@ -1,7 +1,5 @@
 package op
 
-//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 -o ./fakeInterpreter.go --fake-name FakeInterpreter ./ Interpreter
-
 import (
 	"context"
 	"fmt"
@@ -11,10 +9,11 @@ import (
 	"github.com/opctl/opctl/sdks/go/internal/uniquestring"
 	"github.com/opctl/opctl/sdks/go/model"
 	"github.com/opctl/opctl/sdks/go/opspec/interpreter/call/op/inputs"
-	stringPkg "github.com/opctl/opctl/sdks/go/opspec/interpreter/string"
+	stringPkg "github.com/opctl/opctl/sdks/go/opspec/interpreter/str"
 	"github.com/opctl/opctl/sdks/go/opspec/opfile"
 )
 
+//counterfeiter:generate -o fakes/interpreter.go . Interpreter
 type Interpreter interface {
 	// Interpret interprets an SCGOpCall into a DCGOpCall
 	Interpret(
@@ -119,7 +118,7 @@ func (itp _interpreter) Interpret(
 		filepath.Join(itp.dcgScratchDir, opID),
 	)
 	if nil != err {
-		return nil, fmt.Errorf("unable to interpret call to %v; error was: %v", dcgOpCall.OpHandle.Ref(), err)
+		return nil, fmt.Errorf("unable to interpret call to %v; error was: %v", scgOpCall.Ref, err)
 	}
 
 	return dcgOpCall, nil

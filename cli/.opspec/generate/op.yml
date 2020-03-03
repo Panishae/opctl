@@ -8,6 +8,7 @@ inputs:
   path:
     string:
       description: relative path to file containing a 'go:generate ...' pre-processing directive
+      default: ./...
 outputs:
   srcDir:
     dir:

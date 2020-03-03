@@ -1,7 +1,5 @@
 package input
 
-//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 -o ./fakeInterpreter.go --fake-name FakeInterpreter ./ Interpreter
-
 import (
 	"fmt"
 
@@ -13,9 +11,10 @@ import (
 	"github.com/opctl/opctl/sdks/go/opspec/interpreter/number"
 	"github.com/opctl/opctl/sdks/go/opspec/interpreter/object"
 	"github.com/opctl/opctl/sdks/go/opspec/interpreter/reference"
-	stringPkg "github.com/opctl/opctl/sdks/go/opspec/interpreter/string"
+	stringPkg "github.com/opctl/opctl/sdks/go/opspec/interpreter/str"
 )
 
+//counterfeiter:generate -o fakes/interpreter.go . Interpreter
 type Interpreter interface {
 	Interpret(
 		name string,
